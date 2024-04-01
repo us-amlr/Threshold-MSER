@@ -266,7 +266,7 @@ int main(int argc, char **argv) {
 
             std::string ext = file.extension();
 
-            std::string valid_ext[] = {".avi", ".mp4", ".png"};
+            std::string valid_ext[] = {".avi", ".mp4", ".png", ".jpg"};
             int len = sizeof(valid_ext)/sizeof(valid_ext[0]);
             if (!containExt(ext, valid_ext, len)) {
                 continue;
@@ -298,7 +298,7 @@ int main(int argc, char **argv) {
         // This is a temporary solution to determine if the input file is an image or video 
         // cv::Mat testFrame;
         std::string ext = file.extension();
-        bool validImage = (ext == ".png");
+        bool validImage = (ext == ".png" || ext == ".jpg");
 
         if (!validImage) { // If the file is a video
             cv::VideoCapture cap(file.string());
