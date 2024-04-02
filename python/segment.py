@@ -65,13 +65,13 @@ if __name__ == "__main__":
 			print(f"Segmenting images in directory {i}")
 			with tempfile.TemporaryDirectory() as temp_dir:
 				# Run segment
-				print(f"Running segment, and writing files to {temp_dir.name}")
-				run([segemnt_str, "-i", str(raw_path.joinpath(i)), "-o", temp_dir.name])
+				print(f"Running segment, and writing files to {temp_dir}")
+				run([segemnt_str, "-i", str(raw_path.joinpath(i)), "-o", temp_dir])
 
 				# Copy to final place
 				dest_path = proc_path.joinpath(i)
-				print(f"Copying segmented region images to {dest_path}")
-				copy_jpg_files(temp_dir.name, dest_path)
+				print(f"Copying segmented region images from {temp_dir} to {dest_path}")
+				copy_jpg_files(temp_dir, dest_path)
 
 				# TODO: extract CSV files
 				# print(f"Copying measurement ")
