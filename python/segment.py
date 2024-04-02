@@ -71,36 +71,33 @@ if __name__ == "__main__":
 	print(f"Path to raw (in) directories: {raw_path}")
 	print(f"Path to proc (out) directories: {proc_path}")
 
-	start_time = time.time()
 	print(f"Start time of it all: {time.strftime('%Y-%m-%d %H:%M:%S')}")
 	if segement_file.is_file():
 		for i in dir_list:
+			start_time = time.time()
 			print(f"Segmenting images in directory {i}, " + 
          			f"start time {time.strftime('%Y-%m-%d %H:%M:%S')}")
+   
 			with tempfile.TemporaryDirectory() as temp_dir:
-				### Run segment
+				# Run segmentation tool
 				print(f"Running segment, and writing files to {temp_dir}")
 				run([segemnt_str, "-i", str(raw_path.joinpath(i)), "-o", temp_dir])
+				print(f"Segmentation took {(time.time()-start_time)*60} minutes")
 
-				### Copy to final place
+				# Copy images to destination directory, in parallel
 				destination_path = proc_path.joinpath(i)
-    
-				# Ensure the destination directory exists
 				if not destination_path.exists():
 					destination_path.mkdir(parents=True, exist_ok=True)
         
 				print(f"Copying segmented region images from {temp_dir} " + 
           				f"to {destination_path}, using {numcores} cores")
-				# TODO: do this in parallel
 				with mp.Pool(numcores) as pool: 
 					pool.starmap(copy_png_files, zip(Path(temp_dir).glob("**/*.png"), repeat(destination_path)))
 
 				# TODO: extract CSV files
 				# print(f"Copying measurement ")
-				end_time = time.time()
-				print(f"Time is {time.strftime('%Y-%m-%d %H:%M:%S')}")
-				print(f"This directopry took {(end_time-start_time)*60} minutes")
-			print("Cleaning up")
+			print(f"Time is {time.strftime('%Y-%m-%d %H:%M:%S')}")
+			print(f"All told, this directory took {(time.time()-start_time)*60} minutes")
 
 	else:
 		print("error, segment file does not exist")
