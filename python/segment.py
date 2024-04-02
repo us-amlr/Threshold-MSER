@@ -34,8 +34,8 @@ def copy_jpg_files(source_dir, destination_dir, print_message = False):
 if __name__ == "__main__":
 	# Set variables. 
 	# Assume running from SMW home directory, also the home of the mount points
-	raw_mount = Path("amlr-gliders-imagery-raw-dev")
-	proc_mount = Path("amlr-gliders-imagery-proc-dev")
+	raw_mount = Path("/home/sam_woodman_noaa_gov/amlr-gliders-imagery-raw-dev")
+	proc_mount = Path("/home/sam_woodman_noaa_gov/amlr-gliders-imagery-proc-dev")
 
 	raw_path  = raw_mount.joinpath("gliders/2022/amlr08-20220513/shadowgraph/images")
 	proc_path = proc_mount.joinpath("SANDIEGO/2022/amlr08-20220513/regions-mser")
