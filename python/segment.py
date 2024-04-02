@@ -59,7 +59,7 @@ def main():
 	run(["gcsfuse", "--implicit-dirs", proc_bucket, str(proc_mount)])
 
 	# Generate list of Directories to segment
-	dir_list = ['Dir0051', 'Dir0052', 'Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
+	dir_list = ['Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
 
 	segement_file = Path(segemnt_str)
 
