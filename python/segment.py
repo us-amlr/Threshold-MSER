@@ -4,6 +4,7 @@ from subprocess import run
 import tempfile
 import multiprocessing as mp
 from itertools import repeat
+import time
 
 
 # def copy_png_files(source_dir, destination_dir, print_message = False):
@@ -70,9 +71,12 @@ if __name__ == "__main__":
 	print(f"Path to raw (in) directories: {raw_path}")
 	print(f"Path to proc (out) directories: {proc_path}")
 
+	start_time = time.time()
+	print(f"Start time of it all: {time.strftime('%Y-%m-%d %H:%M:%S')}")
 	if segement_file.is_file():
 		for i in dir_list:
-			print(f"Segmenting images in directory {i}")
+			print(f"Segmenting images in directory {i}, " + 
+         			f"start time {time.strftime('%Y-%m-%d %H:%M:%S')}")
 			with tempfile.TemporaryDirectory() as temp_dir:
 				### Run segment
 				print(f"Running segment, and writing files to {temp_dir}")
@@ -93,6 +97,9 @@ if __name__ == "__main__":
 
 				# TODO: extract CSV files
 				# print(f"Copying measurement ")
+				end_time = time.time()
+				print(f"Time is {time.strftime('%Y-%m-%d %H:%M:%S')}")
+				print(f"This directopry took {(end_time-start_time)*60} minutes")
 			print("Cleaning up")
 
 	else:
