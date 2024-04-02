@@ -38,7 +38,7 @@ def copy_png_files(image_file, destination_dir):
 
 
 
-if __name__ == "__main__":
+def main():
 	# Set variables. 
 	# Assume running from SMW home directory, also the home of the mount points
 	raw_bucket = "amlr-imagery-raw-dev" #"amlr-gliders-imagery-raw-dev"
@@ -71,9 +71,10 @@ if __name__ == "__main__":
 	print(f"Path to raw (in) directories: {raw_path}")
 	print(f"Path to proc (out) directories: {proc_path}")
 
-	print(f"Start time of it all: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+	print(f"Start time of directory passes: {time.strftime('%Y-%m-%d %H:%M:%S')}")
 	if segement_file.is_file():
 		for i in dir_list:
+			print("\n--------------------------------------------------")
 			start_time = time.time()
 			print(f"Segmenting images in directory {i}, " + 
          			f"start time {time.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -102,12 +103,17 @@ if __name__ == "__main__":
 	else:
 		print("error, segment file does not exist")
 	
+	print("\n--------------------------------------------------")
 	print("Unmounting buckets")
 	run(["fusermount", "-u", str(raw_mount)])
 	run(["fusermount", "-u", str(proc_mount)])
 
 	print("Script complete")
 
+
+
+if __name__ == "__main__":
+	main()
 
 # cd /opt/Threshold-MSER && git pull && cd ~/
 # sudo chmod -R 755 /opt/Threshold-MSER/python
