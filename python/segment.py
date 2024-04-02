@@ -59,8 +59,7 @@ def main():
 	run(["gcsfuse", "--implicit-dirs", proc_bucket, str(proc_mount)])
 
 	# Generate list of Directories to segment
-	dir_list = ['Dir0050', 'Dir0051', 'Dir0052', 
-             'Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
+	dir_list = ['Dir0051', 'Dir0052', 'Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
 
 	segement_file = Path(segemnt_str)
 
@@ -71,7 +70,7 @@ def main():
 	print(f"Path to raw (in) directories: {raw_path}")
 	print(f"Path to proc (out) directories: {proc_path}")
 
-	print(f"Start time of directory passes: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+	print(f"\nStart time of directory passes: {time.strftime('%Y-%m-%d %H:%M:%S')}")
 	if segement_file.is_file():
 		for i in dir_list:
 			print("\n--------------------------------------------------")
@@ -83,7 +82,7 @@ def main():
 				# Run segmentation tool
 				print(f"Running segment, and writing files to {temp_dir}")
 				run([segemnt_str, "-i", str(raw_path.joinpath(i)), "-o", temp_dir])
-				print(f"Segmentation took {(time.time()-start_time)/60} minutes")
+				print(f"Segmentation runtime: {(time.time()-start_time)/60} minutes")
 
 				# Copy images to destination directory, in parallel
 				destination_path = proc_path.joinpath(i)
@@ -98,7 +97,7 @@ def main():
 				# TODO: extract CSV files
 				# print(f"Copying measurement ")
 			print(f"Time is {time.strftime('%Y-%m-%d %H:%M:%S')}")
-			print(f"All told, this directory took {(time.time()-start_time)/60} minutes")
+			print(f"Full directory runtime: {(time.time()-start_time)/60} minutes")
 
 	else:
 		print("error, segment file does not exist")
