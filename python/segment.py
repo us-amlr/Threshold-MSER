@@ -34,24 +34,27 @@ def copy_jpg_files(source_dir, destination_dir, print_message = False):
 if __name__ == "__main__":
 	# Set variables. 
 	# Assume running from SMW home directory, also the home of the mount points
-	raw_mount = Path("/home/sam_woodman_noaa_gov/amlr-gliders-imagery-raw-dev")
-	proc_mount = Path("/home/sam_woodman_noaa_gov/amlr-gliders-imagery-proc-dev")
+	raw_bucket = "amlr-imagery-raw-dev" #"amlr-gliders-imagery-raw-dev"
+	proc_bucket = "amlr-gliders-imagery-proc-dev"
+	segemnt_str = "/opt/Threshold-MSER/build/segment"
 
-	raw_path  = raw_mount.joinpath("gliders/2022/amlr08-20220513/shadowgraph/images")
-	proc_path = proc_mount.joinpath("SANDIEGO/2022/amlr08-20220513/regions-mser")
+	raw_mount = Path("/home/sam_woodman_noaa_gov").joinpath(raw_bucket)
+	proc_mount = Path("/home/sam_woodman_noaa_gov").joinpath(proc_bucket)
 
 	# Make directories, if necessary, and mount
 	Path(raw_mount).mkdir(parents=True, exist_ok=True)
 	Path(proc_mount).mkdir(parents=True, exist_ok=True)
 
-	run(["gcsfuse", "--implicit-dirs", "-o", "ro", "amlr-imagery-raw-dev", raw_mount])
-	run(["gcsfuse", "--implicit-dirs", proc_mount, proc_mount])
+	run(["gcsfuse", "--implicit-dirs", "-o", "ro", raw_bucket, str(raw_mount)])
+	run(["gcsfuse", "--implicit-dirs", proc_bucket, str(proc_mount)])
 
 	# Generate list of Directories to segment
 	dir_list = ['Dir0000', 'Dir0001', 'Dir0002'] #, 'Dir0003', 'Dir0004', 'Dir0005']
 
-	segemnt_str = "/opt/Threshold-MSER/build/segment"
 	segement_file = Path(segemnt_str)
+
+	raw_path  = raw_mount.joinpath("gliders/2022/amlr08-20220513/shadowgraph/images")
+	proc_path = proc_mount.joinpath("SANDIEGO/2022/amlr08-20220513/regions-mser")
 
 	print(f"Path to segment file: {segement_file}")
 	print(f"Path to raw (in) directories: {raw_path}")
@@ -75,4 +78,10 @@ if __name__ == "__main__":
 			print("Cleaning up")
 
 	else:
-		print("error")
+		print("error, segment file does not exist")
+	
+	print("Unmounting buckets")
+	run(["fusermount", "-u", str(raw_mount)])
+	run(["fusermount", "-u", str(proc_mount)])
+
+	print("Script complete")
