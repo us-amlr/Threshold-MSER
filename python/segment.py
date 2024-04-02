@@ -82,7 +82,7 @@ if __name__ == "__main__":
 				# Run segmentation tool
 				print(f"Running segment, and writing files to {temp_dir}")
 				run([segemnt_str, "-i", str(raw_path.joinpath(i)), "-o", temp_dir])
-				print(f"Segmentation took {(time.time()-start_time)*60} minutes")
+				print(f"Segmentation took {(time.time()-start_time)/60} minutes")
 
 				# Copy images to destination directory, in parallel
 				destination_path = proc_path.joinpath(i)
@@ -97,7 +97,7 @@ if __name__ == "__main__":
 				# TODO: extract CSV files
 				# print(f"Copying measurement ")
 			print(f"Time is {time.strftime('%Y-%m-%d %H:%M:%S')}")
-			print(f"All told, this directory took {(time.time()-start_time)*60} minutes")
+			print(f"All told, this directory took {(time.time()-start_time)/60} minutes")
 
 	else:
 		print("error, segment file does not exist")
