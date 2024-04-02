@@ -71,7 +71,7 @@ if __name__ == "__main__":
 				# Copy to final place
 				dest_path = proc_path.joinpath(i)
 				print(f"Copying segmented region images from {temp_dir} to {dest_path}")
-				copy_jpg_files(temp_dir, dest_path)
+				copy_png_files(temp_dir, dest_path)
 
 				# TODO: extract CSV files
 				# print(f"Copying measurement ")
