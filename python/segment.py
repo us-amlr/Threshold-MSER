@@ -44,7 +44,7 @@ if __name__ == "__main__":
 	Path(raw_mount).mkdir(parents=True, exist_ok=True)
 	Path(proc_mount).mkdir(parents=True, exist_ok=True)
 
-	run(["gcsfuse", "--implicit-dirs", "amlr-imagery-raw-dev", raw_mount])
+	run(["gcsfuse", "--implicit-dirs", "-o", "ro", "amlr-imagery-raw-dev", raw_mount])
 	run(["gcsfuse", "--implicit-dirs", proc_mount, proc_mount])
 
 	# Generate list of Directories to segment
