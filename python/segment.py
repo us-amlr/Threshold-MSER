@@ -4,7 +4,7 @@ from subprocess import run
 import tempfile
 
 
-def copy_jpg_files(source_dir, destination_dir, print_message = False):
+def copy_png_files(source_dir, destination_dir, print_message = False):
     source_path = Path(source_dir)
     destination_path = Path(destination_dir)
 
@@ -18,10 +18,10 @@ def copy_jpg_files(source_dir, destination_dir, print_message = False):
         destination_path.mkdir(parents=True, exist_ok=True)
 
     # Recursively search for jpg files and copy them
-    for jpg_file in source_path.glob("**/*.jpg"):
-        destination_file = destination_path / jpg_file.name
-        shutil.copy(jpg_file, destination_file)
-        if print_message: print(f"Copied '{jpg_file}' to '{destination_file}'")
+    for image_file in source_path.glob("**/*.png"):
+        destination_file = destination_path / image_file.name
+        shutil.copy(image_file, destination_file)
+        if print_message: print(f"Copied '{image_file}' to '{destination_file}'")
 
 
 # source_directory = "/path/to/source/directory"
