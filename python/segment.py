@@ -62,16 +62,16 @@ if __name__ == "__main__":
 
 	if segement_file.is_file():
 		for i in dir_list:
-			print(f"Segmenting images in directoy {i}")
+			print(f"Segmenting images in directory {i}")
 			with tempfile.TemporaryDirectory() as temp_dir:
 				# Run segment
-				print(f"Running segment, and writing files to {temp_dir}")
-				run([segemnt_str, "-i", raw_path.joinpath(i), "-o", temp_dir])
+				print(f"Running segment, and writing files to {temp_dir.name}")
+				run([segemnt_str, "-i", str(raw_path.joinpath(i)), "-o", temp_dir.name])
 
 				# Copy to final place
 				dest_path = proc_path.joinpath(i)
 				print(f"Copying segmented region images to {dest_path}")
-				copy_jpg_files(temp_dir, dest_path)
+				copy_jpg_files(temp_dir.name, dest_path)
 
 				# TODO: extract CSV files
 				# print(f"Copying measurement ")
@@ -85,3 +85,8 @@ if __name__ == "__main__":
 	run(["fusermount", "-u", str(proc_mount)])
 
 	print("Script complete")
+
+
+# cd /opt/Threshold-MSER && git pull && cd ~/
+# sudo chmod -R 755 /opt/Threshold-MSER/python
+# python3 /opt/Threshold-MSER/python/segment.py
