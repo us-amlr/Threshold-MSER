@@ -58,20 +58,20 @@ def main():
 	run(["gcsfuse", "--implicit-dirs", "-o", "ro", raw_bucket, str(raw_mount)])
 	run(["gcsfuse", "--implicit-dirs", proc_bucket, str(proc_mount)])
 
-	# Generate list of Directories to segment
-	# dir_list = ['Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
-	dir_list = ([i.name for i in raw_path.iterdir()])
-	print(f"Directory list: {dir_list}")
-
-	segement_file = Path(segemnt_str)
-
 	# raw_path  = raw_mount.joinpath("gliders/2022/amlr08-20220513/shadowgraph/images")
 	raw_path  = raw_mount.joinpath("ringo-20240312-shadowgraph-imagery/images")
 	proc_path = proc_mount.joinpath("SANDIEGO/2024/ringo-20240312/regions-mser")
 
+	# Generate list of Directories to segment
+	# dir_list = ['Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
+	dir_list = ([i.name for i in raw_path.iterdir()])
+
+	segement_file = Path(segemnt_str)
+
 	print(f"Path to segment file: {segement_file}")
 	print(f"Path to raw (in) directories: {raw_path}")
 	print(f"Path to proc (out) directories: {proc_path}")
+	print(f"Directory list: {dir_list}")
 
 	print(f"\nStart time of directory passes: {time.strftime('%Y-%m-%d %H:%M:%S')}")
 	if segement_file.is_file():
