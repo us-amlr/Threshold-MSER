@@ -41,7 +41,7 @@ def copy_png_files(image_file, destination_dir):
 def main():
 	# Set variables. 
 	# Assume running from SMW home directory, also the home of the mount points
-	raw_bucket = "amlr-imagery-raw-dev" #"amlr-gliders-imagery-raw-dev"
+	raw_bucket = "amlr-upload-tmp-dev" #"amlr-gliders-imagery-raw-dev"
 	proc_bucket = "amlr-gliders-imagery-proc-dev"
 	segemnt_str = "/opt/Threshold-MSER/build/segment"
 	numcores = mp.cpu_count()
@@ -59,12 +59,15 @@ def main():
 	run(["gcsfuse", "--implicit-dirs", proc_bucket, str(proc_mount)])
 
 	# Generate list of Directories to segment
-	dir_list = ['Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
+	# dir_list = ['Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
+	dir_list = ([i.name for i in raw_path.iterdir()])
+	print(f"Directory list: {dir_list}")
 
 	segement_file = Path(segemnt_str)
 
-	raw_path  = raw_mount.joinpath("gliders/2022/amlr08-20220513/shadowgraph/images")
-	proc_path = proc_mount.joinpath("SANDIEGO/2022/amlr08-20220513/regions-mser")
+	# raw_path  = raw_mount.joinpath("gliders/2022/amlr08-20220513/shadowgraph/images")
+	raw_path  = raw_mount.joinpath("ringo-20240312-shadowgraph-imagery/images")
+	proc_path = proc_mount.joinpath("SANDIEGO/2024/ringo-20240312/regions-mser")
 
 	print(f"Path to segment file: {segement_file}")
 	print(f"Path to raw (in) directories: {raw_path}")
