@@ -64,7 +64,10 @@ def main():
 
 	# Generate list of Directories to segment
 	# dir_list = ['Dir0053', 'Dir0054', 'Dir0055', 'Dir0056']
-	dir_list = ([i.name for i in raw_path.iterdir()])
+	dir_list_orig = ([i.name for i in raw_path.iterdir()])
+ 
+	dir_list_ignore = ["Dir0000", "Dir0001", "Dir0002", "Dir0003"]
+	dir_list = list(set(dir_list_orig) - set(dir_list_ignore))
 
 	segement_file = Path(segemnt_str)
 
